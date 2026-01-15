@@ -1,0 +1,50 @@
+{
+  "name": "@rechnungtracker/web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint",
+    "type-check": "tsc --noEmit",
+    "test": "vitest run",
+    "test:watch": "vitest",
+    "test:e2e": "playwright test",
+    "worker": "tsx src/worker/index.ts",
+    "prisma:migrate": "prisma migrate deploy",
+    "prisma:generate": "prisma generate",
+    "prisma:seed": "tsx prisma/seed.ts",
+    "prisma:studio": "prisma studio"
+  },
+  "dependencies": {
+    "next": "^15.1.0",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "@prisma/client": "^6.2.0",
+    "next-auth": "^4.24.0",
+    "bcryptjs": "^2.4.3",
+    "bullmq": "^5.0.0",
+    "ioredis": "^5.4.0",
+    "@paralleldrive/cuid2": "^2.2.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.0.0",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "@types/bcryptjs": "^2.4.6",
+    "typescript": "^5.7.0",
+    "prisma": "^6.2.0",
+    "tsx": "^4.19.0",
+    "tailwindcss": "^3.4.0",
+    "postcss": "^8.4.0",
+    "autoprefixer": "^10.4.0",
+    "eslint": "^9.0.0",
+    "eslint-config-next": "^15.1.0",
+    "vitest": "^2.1.0",
+    "@testing-library/react": "^16.0.0",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@playwright/test": "^1.49.0",
+    "jsdom": "^25.0.0"
+  }
+}

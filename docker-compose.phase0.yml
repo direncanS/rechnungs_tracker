@@ -1,0 +1,12 @@
+# Phase 0 override: scaffold validation only
+# Usage: docker compose -f docker-compose.yml -f docker-compose.phase0.yml up --build
+#
+# Sets APP_BOOT_PHASE=0 for web service:
+# - entrypoint.sh skips migrations and seed
+# - /api/health returns 200 without sentinel file check
+# - Worker starts as idle queue listener (no schema dependency)
+
+services:
+  web:
+    environment:
+      APP_BOOT_PHASE: "0"

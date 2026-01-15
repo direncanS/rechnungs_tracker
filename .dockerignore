@@ -1,0 +1,14 @@
+node_modules
+.next
+.git
+.env
+.env.local
+*.md
+docs/
+storage/uploads/*.pdf
+apps/parser/
+.turbo
+coverage
+test-results
+playwright-report
+e2e

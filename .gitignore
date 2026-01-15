@@ -1,0 +1,65 @@
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Environment
+.env
+.env.local
+.env.*.local
+
+# Next.js
+.next/
+out/
+
+# Python
+__pycache__/
+*.pyc
+*.pyo
+*.egg-info/
+dist/
+.venv/
+venv/
+
+# Storage (keep directory, ignore uploads)
+storage/uploads/*.pdf
+storage/uploads/**/*.pdf
+!storage/uploads/.gitkeep
+
+# Claude Code
+.claude/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Turbo
+.turbo/
+
+# Test
+coverage/
+.nyc_output/
+test-results/
+playwright-report/
+
+# Docker
+*.log
+
+# Prisma
+apps/web/prisma/migrations/**/migration_lock.toml
+
+# AI agent files (do not commit)
+CLAUDE.md
+docs/PROGRESS.md
+docs/MVP-PLAN.md
+docs/contracts/
+docs/rules/
+docs/skills/
+
+# Build artifacts
+*.tsbuildinfo
