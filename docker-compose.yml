@@ -70,7 +70,7 @@ services:
       dockerfile: apps/web/Dockerfile
     restart: unless-stopped
     entrypoint: []
-    command: ["node", "-e", "console.log('Worker started — queue listener idle (Phase 0)'); setInterval(() => {}, 60000)"]
+    command: ["node", "--import", "tsx", "src/worker/index.ts"]
     environment:
       DATABASE_URL: ${DATABASE_URL}
       REDIS_URL: ${REDIS_URL}
