@@ -29,3 +29,4 @@ export const DEFAULT_PAGE_SIZE = 20;
 export const MAX_EXPORT_ROWS = 1000;
 export const PDF_MAGIC_BYTES = "%PDF-";
 export const STATUS_POLL_INTERVAL_MS = 2000;
+export const SESSION_MAX_AGE_SECONDS = 8 * 60 * 60; // 8 hours
