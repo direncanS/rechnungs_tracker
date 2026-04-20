@@ -113,6 +113,20 @@ describe("NextAuth authorize callback", () => {
     expect(result).toBeNull();
   });
 
+  it("normalizes email to lowercase and trimmed before DB lookup", async () => {
+    vi.mocked(prisma.user.findUnique).mockResolvedValue(null);
+    const authorize = getAuthorize();
+    await authorize({
+      email: "  Admin@Test.COM  ",
+      password: "password123",
+    });
+    expect(prisma.user.findUnique).toHaveBeenCalledWith(
+      expect.objectContaining({
+        where: { email: "admin@test.com" },
+      })
+    );
+  });
+
   it("returns user object (without passwordHash) on successful login", async () => {
     vi.mocked(prisma.user.findUnique).mockResolvedValue({
       id: "u1",

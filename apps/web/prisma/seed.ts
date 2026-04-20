@@ -20,11 +20,13 @@ async function main() {
     process.exit(1);
   }
 
+  const normalizedEmail = email.trim().toLowerCase();
+
   // Idempotent: only create if not exists
-  const existing = await prisma.user.findUnique({ where: { email } });
+  const existing = await prisma.user.findUnique({ where: { email: normalizedEmail } });
 
   if (existing) {
-    console.log(`Admin user already exists: ${email}`);
+    console.log(`Admin user already exists: ${normalizedEmail}`);
     return;
   }
 
@@ -32,7 +34,7 @@ async function main() {
 
   await prisma.user.create({
     data: {
-      email,
+      email: normalizedEmail,
       name,
       passwordHash,
       role: "OWNER",
@@ -40,7 +42,7 @@ async function main() {
     },
   });
 
-  console.log(`Admin user created: ${email}`);
+  console.log(`Admin user created: ${normalizedEmail}`);
 }
 
 main()
