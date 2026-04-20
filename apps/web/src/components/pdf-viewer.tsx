@@ -18,8 +18,7 @@ export default function PdfViewer({ invoiceId }: PdfViewerProps) {
       />
       <a
         href={pdfUrl}
-        target="_blank"
-        rel="noreferrer"
+        download
         className="block text-center text-sm text-blue-600 hover:underline py-2"
         data-testid="pdf-download-link"
       >
