@@ -32,6 +32,10 @@ COPY apps/web/postcss.config.js ./
 # Build Next.js
 RUN pnpm build
 
+# Standalone output: copy static assets and public into the standalone dir
+RUN cp -r .next/static .next/standalone/.next/static && \
+    cp -r public .next/standalone/public
+
 # Copy entrypoint
 COPY apps/web/entrypoint.sh /app/entrypoint.sh
 RUN chmod +x /app/entrypoint.sh
