@@ -14,8 +14,8 @@ interface InvoiceItemsProps {
   items: InvoiceItemData[];
 }
 
-function fmt(value: number | null): string {
-  return value != null ? value.toFixed(2) : "-";
+function fmt(value: number | string | null): string {
+  return value != null ? Number(value).toFixed(2) : "-";
 }
 
 export default function InvoiceItems({ items }: InvoiceItemsProps) {

@@ -165,7 +165,7 @@ export default function InvoicesPage() {
                     </td>
                     <td className="px-3 py-2">
                       {item.totalAmount != null
-                        ? `${item.totalAmount.toFixed(2)} ${item.currency ?? ""}`
+                        ? `${Number(item.totalAmount).toFixed(2)} ${item.currency ?? ""}`
                         : "-"}
                     </td>
                     <td className="px-3 py-2">

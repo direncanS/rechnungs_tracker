@@ -181,16 +181,16 @@ export default function InvoiceDetailPage() {
             </div>
             <div>
               <span className="font-medium text-gray-600">Subtotal:</span>{" "}
-              {invoice.subtotal != null ? invoice.subtotal.toFixed(2) : "-"}
+              {invoice.subtotal != null ? Number(invoice.subtotal).toFixed(2) : "-"}
             </div>
             <div>
               <span className="font-medium text-gray-600">Tax:</span>{" "}
-              {invoice.taxAmount != null ? invoice.taxAmount.toFixed(2) : "-"}
+              {invoice.taxAmount != null ? Number(invoice.taxAmount).toFixed(2) : "-"}
             </div>
             <div>
               <span className="font-medium text-gray-600">Total:</span>{" "}
               {invoice.totalAmount != null
-                ? invoice.totalAmount.toFixed(2)
+                ? Number(invoice.totalAmount).toFixed(2)
                 : "-"}
             </div>
             <div>
