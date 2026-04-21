@@ -78,8 +78,7 @@ export async function processInvoice(job: Job<{ invoiceId: string }>) {
     throw new Error(errorMsg);
   }
 
-  const data = body.data;
-  const supplierName: string = data.supplier_name ?? "Unknown";
+  const supplierName: string = body.supplier_name ?? "Unknown";
   const normalizedName = supplierName.toLowerCase().trim();
 
   await prisma.$transaction(async (tx) => {
@@ -88,8 +87,8 @@ export async function processInvoice(job: Job<{ invoiceId: string }>) {
       create: {
         name: supplierName,
         normalizedName,
-        address: data.supplier_address ?? null,
-        taxId: data.supplier_tax_id ?? null,
+        address: body.supplier_address ?? null,
+        taxId: body.supplier_tax_id ?? null,
       },
       update: {},
     });
@@ -99,15 +98,15 @@ export async function processInvoice(job: Job<{ invoiceId: string }>) {
     await tx.invoice.update({
       where: { id: invoiceId },
       data: {
-        invoiceNumber: data.invoice_number ?? null,
-        invoiceDate: data.invoice_date ? new Date(data.invoice_date) : null,
-        dueDate: data.due_date ? new Date(data.due_date) : null,
-        subtotal: data.subtotal ?? null,
-        taxAmount: data.tax_amount ?? null,
-        totalAmount: data.total_amount ?? null,
-        currency: data.currency ?? "EUR",
+        invoiceNumber: body.invoice_number ?? null,
+        invoiceDate: body.invoice_date ? new Date(body.invoice_date) : null,
+        dueDate: body.due_date ? new Date(body.due_date) : null,
+        subtotal: body.subtotal ?? null,
+        taxAmount: body.tax_amount ?? null,
+        totalAmount: body.total_amount ?? null,
+        currency: body.currency ?? "EUR",
         parserVersion: body.parser_version ?? null,
-        parserConfidence: body.confidence_score ?? null,
+        parserConfidence: body.confidence ?? null,
         parserRawOutput: body,
         parseError: null,
         processingStatus: "PARSED",
@@ -116,7 +115,7 @@ export async function processInvoice(job: Job<{ invoiceId: string }>) {
       },
     });
 
-    const items = data.items ?? [];
+    const items = body.items ?? [];
     if (items.length > 0) {
       await tx.invoiceItem.createMany({
         data: items.map(

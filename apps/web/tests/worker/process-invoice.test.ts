@@ -64,9 +64,9 @@ function mockFetchSuccess(data = {}) {
     json: () =>
       Promise.resolve({
         success: true,
-        data: defaultData,
+        ...defaultData,
         parser_version: "1.0.0",
-        confidence_score: 0.85,
+        confidence: 0.85,
       }),
   });
 }
@@ -226,6 +226,18 @@ describe("processInvoice", () => {
     } catch (error) {
       expect(error).toBeInstanceOf(UnrecoverableError);
     }
+  });
+
+  it("stores parserConfidence from parser response", async () => {
+    mockFetchSuccess();
+    await processInvoice(makeJob());
+    expect(prisma.invoice.update).toHaveBeenCalledWith(
+      expect.objectContaining({
+        data: expect.objectContaining({
+          parserConfidence: 0.85,
+        }),
+      })
+    );
   });
 
   it("handles empty items list (still PARSED + NEEDS_REVIEW)", async () => {
