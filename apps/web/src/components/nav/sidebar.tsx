@@ -25,7 +25,12 @@ const ROLE_LEVEL: Record<string, number> = {
   OWNER: 2,
 };
 
-export default function Sidebar() {
+interface SidebarProps {
+  open?: boolean;
+  onClose?: () => void;
+}
+
+export default function Sidebar({ open, onClose }: SidebarProps) {
   const pathname = usePathname();
   const { data: session } = useSession();
   const role = (session?.user?.role as string) ?? "WORKER";
@@ -36,48 +41,63 @@ export default function Sidebar() {
   );
 
   return (
-    <aside className="flex h-full w-56 flex-col border-r bg-white" data-testid="sidebar">
-      <div className="border-b px-4 py-4">
-        <h1 className="text-lg font-bold">RechnungTracker</h1>
-      </div>
-
-      <nav className="flex-1 overflow-y-auto px-2 py-3">
-        <ul className="space-y-1">
-          {visibleItems.map((item) => {
-            const active = pathname === item.href || pathname.startsWith(item.href + "/");
-            return (
-              <li key={item.href}>
-                <Link
-                  href={item.href}
-                  className={`block rounded px-3 py-2 text-sm font-medium ${
-                    active
-                      ? "bg-blue-50 text-blue-700"
-                      : "text-gray-700 hover:bg-gray-100"
-                  }`}
-                >
-                  {item.label}
-                </Link>
-              </li>
-            );
-          })}
-        </ul>
-      </nav>
-
-      <div className="border-t px-4 py-3">
-        <div className="mb-2 text-xs text-gray-500">
-          <div className="truncate font-medium text-gray-700" data-testid="user-name">
-            {session?.user?.name}
-          </div>
-          <div className="truncate" data-testid="user-role">{role}</div>
+    <>
+      {open && (
+        <div
+          className="fixed inset-0 z-40 bg-black/50 md:hidden"
+          onClick={onClose}
+          data-testid="sidebar-backdrop"
+        />
+      )}
+      <aside
+        className={`flex h-full w-56 flex-col border-r bg-white ${
+          open ? "fixed z-50 md:relative md:z-auto" : "hidden md:flex"
+        }`}
+        data-testid="sidebar"
+      >
+        <div className="border-b px-4 py-4">
+          <h1 className="text-lg font-bold">RechnungTracker</h1>
         </div>
-        <button
-          onClick={() => signOut({ callbackUrl: "/login" })}
-          className="w-full rounded border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
-          data-testid="logout-button"
-        >
-          Sign out
-        </button>
-      </div>
-    </aside>
+
+        <nav className="flex-1 overflow-y-auto px-2 py-3">
+          <ul className="space-y-1">
+            {visibleItems.map((item) => {
+              const active = pathname === item.href || pathname.startsWith(item.href + "/");
+              return (
+                <li key={item.href}>
+                  <Link
+                    href={item.href}
+                    onClick={() => onClose?.()}
+                    className={`block rounded px-3 py-2 text-sm font-medium ${
+                      active
+                        ? "bg-blue-50 text-blue-700"
+                        : "text-gray-700 hover:bg-gray-100"
+                    }`}
+                  >
+                    {item.label}
+                  </Link>
+                </li>
+              );
+            })}
+          </ul>
+        </nav>
+
+        <div className="border-t px-4 py-3">
+          <div className="mb-2 text-xs text-gray-500">
+            <div className="truncate font-medium text-gray-700" data-testid="user-name">
+              {session?.user?.name}
+            </div>
+            <div className="truncate" data-testid="user-role">{role}</div>
+          </div>
+          <button
+            onClick={() => signOut({ callbackUrl: "/login" })}
+            className="w-full rounded border border-gray-300 px-3 py-1.5 text-sm text-gray-700 hover:bg-gray-50"
+            data-testid="logout-button"
+          >
+            Sign out
+          </button>
+        </div>
+      </aside>
+    </>
   );
 }
